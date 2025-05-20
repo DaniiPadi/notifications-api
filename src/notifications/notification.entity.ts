@@ -5,7 +5,7 @@ export class Notification {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true }) // ← ahora puede ser null
+  @Column({ nullable: true }) // ahora puede ser null
   userId: number;
 
   @Column()
