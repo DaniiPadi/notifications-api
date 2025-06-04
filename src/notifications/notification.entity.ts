@@ -1,16 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { ColdObservable } from "rxjs/internal/testing/ColdObservable";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Notification {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
-  message: string;
-
-  @Column()
-  type: string;
-
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  created_at: Date;
+    @PrimaryGeneratedColumn()
+    id: number;
+    @Column()
+    message: string;
+    @Column()
+    type: string;
+    @CreateDateColumn()
+    created_at: Date;
 }
