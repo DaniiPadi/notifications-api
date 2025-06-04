@@ -1,13 +1,16 @@
 import { NotificationStrategy } from './notification-strategy.interface';
 
 export class NotificationContext {
-    private strategy: NotificationStrategy;
+  private strategy: NotificationStrategy;
 
-    setStrategy(strategy: NotificationStrategy) {
-        this.strategy = strategy;
+  setStrategy(strategy: NotificationStrategy) {
+    this.strategy = strategy;
+  }
+
+  executeStrategy(message: string) {
+    if (!this.strategy) {
+      throw new Error('No se ha definido una estrategia de notificación.');
     }
-
-    executeStrategy(message: string) {
-        this.strategy.send(message);
-}
+    this.strategy.send(message);
+  }
 }

@@ -17,32 +17,36 @@ export class NotificationsService {
   ) {}
 
   async sendNotification(message: string, type: string) {
-    const context = new NotificationContext();
+    try {
+      const context = new NotificationContext();
 
-    // Selecciona la estrategia según el tipo de notificación
-    switch (type) {
-      case 'email':
-        context.setStrategy(new EmailNotification());
-        break;
-      case 'sms':
-        context.setStrategy(new SMSNotification());
-        break;
-      case 'push':
-        context.setStrategy(new PushNotification());
-        break;
-      default:
-        throw new Error('Tipo de notificación no válido');
+      // Selecciona la estrategia según el tipo de notificación
+      switch (type) {
+        case 'email':
+          context.setStrategy(new EmailNotification());
+          break;
+        case 'sms':
+          context.setStrategy(new SMSNotification());
+          break;
+        case 'push':
+          context.setStrategy(new PushNotification());
+          break;
+        default:
+          throw new Error('Tipo de notificación no válido');
+      }
+
+      // Ejecuta la estrategia
+      context.executeStrategy(message);
+
+      // Guarda la notificación en la base de datos
+      const notification = this.notificationRepository.create({ message, type });
+      return await this.notificationRepository.save(notification);
+    } catch (error) {
+      console.error('ERROR EN sendNotification:', error.message);
+      throw error;
     }
-
-    // Ejecuta la estrategia (aquí solo hace console.log)
-    context.executeStrategy(message);
-
-    // Guarda la notificación en la base de datos
-    const notification = this.notificationRepository.create({ message, type });
-    return this.notificationRepository.save(notification);
   }
 
-  // Método adicional para consultar todas las notificaciones
   async findAll() {
     return this.notificationRepository.find();
   }

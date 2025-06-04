@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Notification {
@@ -6,14 +6,11 @@ export class Notification {
   id: number;
 
   @Column()
-  userId: number;
-
-  @Column()
   message: string;
 
   @Column()
   type: string;
 
-  @CreateDateColumn()
-    createdAt: Date;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  created_at: Date;
 }

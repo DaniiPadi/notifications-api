@@ -1,3 +1,3 @@
 export interface NotificationStrategy {
-    send(message: string): void;
+  send(message: string): void;
 }
